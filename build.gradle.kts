@@ -22,13 +22,13 @@ repositories {
 
 dependencies {
 	minecraft(libs.minecraft)
-	mappings(libs.yarn)
+	mappings(loom.officialMojangMappings())
 	modImplementation(libs.bundles.fabric)
 }
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 
 	withSourcesJar()
 }
@@ -59,8 +59,8 @@ publisher {
 
 	versionType.set("release")
 	projectVersion.set(project.version.toString())
-	gameVersions.set(listOf("1.21"))
-	loaders.set(listOf("fabric", "quilt"))
+	gameVersions.set(listOf("26.2"))
+	loaders.set(listOf("fabric"))
 	curseEnvironment.set("client")
 
 	modrinthDepends.required("fabric-api")
