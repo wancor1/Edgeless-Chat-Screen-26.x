@@ -7,12 +7,12 @@
   "description": "Why not having an edgeless chat screen?",
   "authors": [
     "Kessoku Tea Time",
-    "KrLite"
+    "KrLite",
+    "wancoro"
   ],
   "contact": {
-    "homepage": "https://modrinth.com/mod/edgeless-chat-screen",
-    "sources": "https://github.com/KessokuTeaTime/Edgeless-Chat-Screen",
-    "issues": "https://github.com/KessokuTeaTime/Edgeless-Chat-Screen/issues"
+    "sources": "https://github.com/wancor1/Edgeless-Chat-Screen",
+    "issues": "https://github.com/wancor1/Edgeless-Chat-Screen/issues"
   },
 
   "license": "GPL-3.0",
@@ -30,7 +30,7 @@
 
   "depends": {
     "fabricloader": "*",
-    "minecraft": "1.21.x"
+    "minecraft": "26.2"
   },
   "suggests": {
   }
