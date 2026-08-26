@@ -4,7 +4,6 @@ plugins {
 	idea
 	`maven-publish`
 	alias(libs.plugins.fabric.loom)
-	alias(libs.plugins.modpublisher)
 }
 
 val display = libs.versions.display
@@ -16,19 +15,34 @@ base {
 	archivesName.set(libs.versions.archives.name)
 }
 
+tasks.withType<JavaCompile>().configureEach {
+    options.release = 25
+}
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	minecraft(libs.minecraft)
-	mappings(loom.officialMojangMappings())
-	modImplementation(libs.bundles.fabric)
+    minecraft(libs.minecraft)
+    implementation(libs.fabric.loader)
+    implementation(libs.fabric.api)
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        create("edgelesschatscreen") {
+            sourceSet(sourceSets.named("main").get())
+            sourceSet(sourceSets.named("client").get())
+        }
+    }
 }
 
 java {
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 
 	withSourcesJar()
 }
@@ -46,35 +60,4 @@ tasks {
 	jar {
 		from("LICENSE")
 	}
-}
-
-publisher {
-	apiKeys {
-		modrinth(System.getenv("MODRINTH_TOKEN"))
-		curseforge(System.getenv("CURSEFORGE_TOKEN"))
-	}
-
-	modrinthID.set(libs.versions.id.modrinth)
-	curseID.set(libs.versions.id.curseforge)
-
-	versionType.set("release")
-	projectVersion.set(project.version.toString())
-	gameVersions.set(listOf("26.2"))
-	loaders.set(listOf("fabric"))
-	curseEnvironment.set("client")
-
-	modrinthDepends.required("fabric-api")
-	modrinthDepends.optional()
-	modrinthDepends.embedded()
-
-	curseDepends.required("fabric-api")
-	curseDepends.optional()
-	curseDepends.embedded()
-
-	displayName.set("${display.name.get()} ${libs.versions.mod.get()} for ${display.loader.get()} ${display.version.get()}")
-
-	artifact.set(tasks.remapJar)
-	addAdditionalFile(tasks.remapSourcesJar)
-
-	changelog.set(file("CHANGELOG.md"))
 }
